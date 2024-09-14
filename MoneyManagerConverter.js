@@ -2,7 +2,7 @@ class MoneyManagerConverter {
     constructor() {}
 
     #PRIVATE_CATEGORY_TO_MONEY_MANAGER_MAP = {
-      'Restaurants, cafes, bars': ['🍜 food', 'Eating out'],
+      'Restaurants, cafes, bars': ['🍜 Food', 'Eating out'],
       'Pharmacies': ['🧘🏼 Health', 'Medicine'],
       'Supermarkets and groceries': ['🍜 Food', 'Supermarket'],
       'Payments by details': ['Other'],
