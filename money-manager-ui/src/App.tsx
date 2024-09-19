@@ -1,7 +1,9 @@
+import { TabNavigation } from "./components/bottom-navigation";
+
 function App() {
     return (
         <>
-            <h1 className="text-3xl font-bold underline">Hello world!</h1>
+            <TabNavigation className="fixed w-full bottom-0" />
         </>
     );
 }
