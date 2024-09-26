@@ -36,15 +36,16 @@ export const TabNavigation: FC<{ className?: string }> = ({ className }) => {
 
     return (
         <nav
-            className={`flex border-t border-t-neutral-700 justify-around items-center ${className} h-16`}
+            className={`flex border-t border-t-neutral-700 justify-around items-center bg-neutral-900 ${className} h-16`}
         >
             {buttons.map(({ name, icon, type }) => (
                 <a
                     onClick={() => setActiveButton(type)}
+                    key={name}
                     className="flex justify-center flex-col items-center dark:text-neutral-500 text-xs content-center cursor-pointer flex-wrap h-full"
                 >
                     {icon({
-                        className: `h-7 w-7  ${activeButton === type ? "text-neutral-200" : "dark:text-neutral-500"}`,
+                        className: `size-7  ${activeButton === type ? "text-neutral-200" : "dark:text-neutral-500"}`,
                     })}
 
                     <span
