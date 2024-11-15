@@ -1,7 +1,20 @@
 {
-    "files": [],
-    "references": [
-        { "path": "./tsconfig.app.json" },
-        { "path": "./tsconfig.node.json" }
-    ]
+    "compilerOptions": {
+        "target": "ESNEXT",
+        "useDefineForClassFields": true,
+        "lib": ["ESNEXT", "DOM", "DOM.Iterable", "WebWorker"],
+        "module": "ESNext",
+        "skipLibCheck": true,
+
+        /* Bundler mode */
+        "moduleResolution": "bundler",
+        "jsx": "react-jsx",
+
+        /* Linting */
+        "strict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noFallthroughCasesInSwitch": true
+    },
+    "include": ["src", "src/service-worker/common.worker.ts", "public/bin"]
 }

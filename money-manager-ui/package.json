@@ -5,11 +5,12 @@
     "type": "module",
     "scripts": {
         "dev": "vite --host",
-        "build": "tsc -b && vite build",
+        "build": "vite build",
         "lint": "eslint .",
         "preview": "vite preview"
     },
     "dependencies": {
+        "@electric-sql/pglite": "^0.2.12",
         "@headlessui/react": "^2.1.8",
         "@heroicons/react": "^2.1.5",
         "react": "^18.3.1",
@@ -17,19 +18,37 @@
     },
     "devDependencies": {
         "@eslint/js": "^9.9.0",
+        "@sqlite.org/sqlite-wasm": "^3.46.1-build4",
+        "@types/node": "^22.7.5",
         "@types/react": "^18.3.3",
         "@types/react-dom": "^18.3.0",
+        "@vitejs/plugin-legacy": "^5.4.2",
         "@vitejs/plugin-react-swc": "^3.5.0",
         "autoprefixer": "^10.4.20",
+        "copy-webpack-plugin": "^12.0.2",
+        "css-loader": "^7.1.2",
         "eslint": "^9.9.0",
         "eslint-plugin-react-hooks": "^5.1.0-rc.0",
         "eslint-plugin-react-refresh": "^0.4.9",
         "globals": "^15.9.0",
+        "html-webpack-plugin": "^5.6.3",
         "postcss": "^8.4.47",
+        "postcss-loader": "^8.1.1",
         "prettier": "3.3.3",
-        "tailwindcss": "^3.4.11",
+        "style-loader": "^4.0.0",
+        "tailwindcss": "^3.4.14",
+        "terser": "^5.36.0",
+        "ts-loader": "^9.5.1",
         "typescript": "^5.5.3",
         "typescript-eslint": "^8.0.1",
-        "vite": "^5.4.1"
+        "vite": "^5.4.1",
+        "vite-plugin-pwa": "^0.20.5",
+        "vite-plugin-static-copy": "^2.0.0",
+        "vite-plugin-top-level-await": "^1.4.4",
+        "vite-plugin-wasm": "^3.3.0",
+        "webpack": "^5.96.1",
+        "webpack-cli": "^5.1.4",
+        "webpack-dev-server": "^5.1.0",
+        "workbox-precaching": "^7.1.0"
     }
 }
