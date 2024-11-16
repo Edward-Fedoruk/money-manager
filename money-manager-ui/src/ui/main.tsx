@@ -39,10 +39,10 @@ if ("serviceWorker" in navigator) {
 
         console.log("Creating table...");
         await pg.exec(`
-          CREATE TABLE IF NOT EXISTS test (
+            CREATE TABLE IF NOT EXISTS test (
             id SERIAL PRIMARY KEY,
             name TEXT
-          );
+            );
         `);
 
         console.log("Inserting data...");
@@ -50,7 +50,7 @@ if ("serviceWorker" in navigator) {
 
         console.log("Selecting data...");
         const res = await pg.exec(`
-          SELECT * FROM test;
+            SELECT * FROM test;
         `);
 
         console.log(res);
@@ -64,20 +64,9 @@ if ("serviceWorker" in navigator) {
 
         console.log("Selecting data...");
         const res2 = await pg.exec(`
-          SELECT * FROM test;
+            SELECT * FROM test;
         `);
 
         console.log(res2);
-        // navigator.serviceWorker.register("common.worker.js");
-        // navigator.serviceWorker.register("database.worker.js", {
-        //     type: "module",
-        // });
     });
 }
-
-// Enable HMR
-// if ((module as any).hot) {
-//     (module as any).hot.accept("./App", () => {
-//         const NextApp = require("./App").default;
-//         render(NextApp);
-//     });

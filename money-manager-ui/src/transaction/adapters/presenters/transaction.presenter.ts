@@ -4,7 +4,7 @@ import {
     TransactionPresenterRequestModel,
 } from "../../core/use-cases/transaction-presenter.interface";
 
-type SaveTransactionViewModel = {
+export type TransactionViewModel = {
     errorMessage?: string;
     transaction?: {
         date: Date;
@@ -22,9 +22,9 @@ type SaveTransactionViewModel = {
     };
 };
 
-export class SaveTransactionPresenter implements ITransactionPresenter {
-    viewModel: SaveTransactionViewModel = {};
-    constructor(private dispatch: Dispatcher<SaveTransactionViewModel>) {}
+export class TransactionPresenter implements ITransactionPresenter {
+    viewModel: TransactionViewModel = {};
+    constructor(private dispatch: Dispatcher<TransactionViewModel>) {}
 
     presentSavedTransaction(
         transaction: TransactionPresenterRequestModel,
@@ -66,6 +66,6 @@ export class SaveTransactionPresenter implements ITransactionPresenter {
         _: Omit<TransactionPresenterRequestModel, "id">,
         message: string,
     ): void {
-        this.viewModel.errorMessage = `Error: ${message}. Please try to save transaction it again`;
+        this.viewModel.errorMessage = `Error: ${message}. Please try again`;
     }
 }

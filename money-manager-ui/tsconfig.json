@@ -16,5 +16,12 @@
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true
     },
-    "include": ["src", "src/ui/service-worker/common.worker.ts", "public/bin"]
+    "include": [
+        "src",
+        "src/ui/service-worker/common.worker.ts",
+        "public/bin",
+        "postcss.config.js",
+        "tailwind.config.js",
+        "vite.config.ts"
+    ]
 }

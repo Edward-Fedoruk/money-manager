@@ -2,7 +2,6 @@ import { cleanupOutdatedCaches, precacheAndRoute } from "workbox-precaching";
 
 declare let self: ServiceWorkerGlobalScope;
 
-console.log("TESTSETSE");
 cleanupOutdatedCaches();
 
 precacheAndRoute(self.__WB_MANIFEST ?? []);
