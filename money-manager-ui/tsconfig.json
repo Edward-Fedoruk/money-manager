@@ -16,5 +16,5 @@
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true
     },
-    "include": ["src", "src/service-worker/common.worker.ts", "public/bin"]
+    "include": ["src", "src/ui/service-worker/common.worker.ts", "public/bin"]
 }
