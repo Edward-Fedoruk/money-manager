@@ -2,16 +2,18 @@ import { FC } from "react";
 import { SummaryListItem } from "./summary-list-item";
 import { TransactionListItem } from "./transaction-list-item";
 
+export type TransactionItem = {
+    date: Date;
+    category: string;
+    subCategory: string;
+    money: number;
+    moneySign: string;
+    note: string;
+};
+
 type Props = {
     date: string;
-    transactions: {
-        date: Date;
-        category: string;
-        subCategory: string;
-        money: number;
-        moneySign: string;
-        note: string;
-    }[];
+    transactions: TransactionItem[];
     className: string;
 };
 

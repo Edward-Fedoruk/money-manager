@@ -1,8 +1,8 @@
-import { Dispatcher, Presenter } from "../../common/types";
+import { Dispatcher } from "../../../common/types";
 import {
     ITransactionPresenter,
     TransactionPresenterRequestModel,
-} from "../use-cases/transaction-presenter.interface";
+} from "../../core/use-cases/transaction-presenter.interface";
 
 type SaveTransactionViewModel = {
     errorMessage?: string;

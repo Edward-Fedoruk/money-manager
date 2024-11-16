@@ -1,13 +1,16 @@
 import {
     ITransactionRepository,
     SaveTransactionRequestModel,
-} from "../../use-cases/transaction-repository.interface";
+} from "../core/use-cases/transaction-repository.interface";
+
+interface ITransactionRepository {}
 
 export class TransactionRepository implements ITransactionRepository {
     async saveTransaction(
         transaction: SaveTransactionRequestModel,
     ): Promise<string> {
-        console.log("saving transaction", transaction);
+        transaction;
+
         return "mocked-id-" + Math.random();
     }
 }

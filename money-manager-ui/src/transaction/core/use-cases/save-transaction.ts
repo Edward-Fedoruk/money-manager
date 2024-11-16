@@ -1,6 +1,5 @@
-import { IUseCase } from "../../common/types";
+import { IUseCase } from "../../../common/types";
 import { Transaction } from "../entities/transaction.entity";
-// import { Transaction } from "../entities/transaction.entity";
 import { ITransactionPresenter } from "./transaction-presenter.interface";
 import {
     ITransactionRepository,

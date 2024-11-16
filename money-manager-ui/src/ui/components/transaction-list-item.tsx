@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-export type TransactionListItem = {
+type TransactionListItem = {
     isSelected: boolean;
     note: string;
     money: string;
