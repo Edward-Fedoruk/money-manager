@@ -26,7 +26,7 @@ export default defineConfig({
             injectManifest: {
                 maximumFileSizeToCacheInBytes: 13_000_000,
             },
-            srcDir: "src/service-worker",
+            srcDir: "src/ui/service-worker",
             filename: "common.worker.ts",
             // @ts-ignore
             manifest,
