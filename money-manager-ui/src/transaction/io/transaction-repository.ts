@@ -3,8 +3,6 @@ import {
     SaveTransactionRequestModel,
 } from "../core/use-cases/transaction-repository.interface";
 
-interface ITransactionRepository {}
-
 export class TransactionRepository implements ITransactionRepository {
     async saveTransaction(
         transaction: SaveTransactionRequestModel,
