@@ -10,6 +10,7 @@ type CreateTransactionRequestModel = {
     datetime: Date;
     category: string;
     subcategory: string;
+    type: "income" | "expense";
     description: string;
     price: number;
     currency: string;
@@ -22,37 +23,35 @@ export class SaveTransactionUseCase implements IUseCase {
         transactionRequestModel: CreateTransactionRequestModel,
         transactionPresenter: ITransactionPresenter,
     ) {
-        try {
-            const transactionWithoutId: Omit<Transaction, "id"> = {
-                datetime: transactionRequestModel.datetime,
-                subcategory: transactionRequestModel.subcategory,
-                description: transactionRequestModel.description,
-                price: transactionRequestModel.price,
-                currency: transactionRequestModel.currency,
-                category: transactionRequestModel.category,
-            };
+        const transactionWithoutId: Omit<Transaction, "id"> = {
+            datetime: transactionRequestModel.datetime,
+            subcategory: transactionRequestModel.subcategory,
+            type: transactionRequestModel.type,
+            description: transactionRequestModel.description,
+            price: transactionRequestModel.price,
+            currency: transactionRequestModel.currency,
+            category: transactionRequestModel.category,
+        };
 
+        try {
             const transactionId =
                 await this.repository.saveTransaction(transactionWithoutId);
 
-            transactionPresenter.presentSavedTransaction({
+            transactionPresenter.present({
                 ...transactionWithoutId,
                 id: transactionId,
             });
         } catch (error: unknown) {
             if (error instanceof RepositoryError) {
-                transactionPresenter.presentTransactionFailure(
-                    {
-                        datetime: transactionRequestModel.datetime,
-                        subcategory: transactionRequestModel.subcategory,
-                        description: transactionRequestModel.description,
-                        price: transactionRequestModel.price,
-                        currency: transactionRequestModel.currency,
-                        category: transactionRequestModel.category,
-                    },
+                transactionPresenter.presentFailure(
+                    transactionWithoutId,
                     "Unable to save transaction",
                 );
             }
+            transactionPresenter.presentFailure(
+                transactionWithoutId,
+                "something when saving transaction unexpected happened",
+            );
         }
     }
 }

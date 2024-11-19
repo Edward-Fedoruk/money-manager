@@ -26,9 +26,7 @@ export class TransactionPresenter implements ITransactionPresenter {
     viewModel: TransactionViewModel = {};
     constructor(private dispatch: Dispatcher<TransactionViewModel>) {}
 
-    presentSavedTransaction(
-        transaction: TransactionPresenterRequestModel,
-    ): void {
+    present(transaction: TransactionPresenterRequestModel): void {
         const daysOfWeek = [
             "Sunday",
             "Monday",
@@ -62,10 +60,12 @@ export class TransactionPresenter implements ITransactionPresenter {
         this.dispatch(this.viewModel);
     }
 
-    presentTransactionFailure(
+    presentFailure(
         _: Omit<TransactionPresenterRequestModel, "id">,
         message: string,
     ): void {
-        this.viewModel.errorMessage = `Error: ${message}. Please try again`;
+        this.viewModel.errorMessage = `Error: ${message}`;
+
+        this.dispatch(this.viewModel);
     }
 }

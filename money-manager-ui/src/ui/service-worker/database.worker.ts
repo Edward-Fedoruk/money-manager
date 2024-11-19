@@ -1,6 +1,7 @@
 import { PGlite } from "@electric-sql/pglite";
 import { OpfsAhpFS } from "@electric-sql/pglite/opfs-ahp";
 import { worker } from "@electric-sql/pglite/worker";
+import { drizzle } from "drizzle-orm/pglite";
 
 worker({
     async init() {

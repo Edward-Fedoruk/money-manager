@@ -2,7 +2,11 @@ import { StrictMode } from "react";
 import { PGliteWorker } from "@electric-sql/pglite/worker";
 import { createRoot } from "react-dom/client";
 import App from "./App";
+import { PGlite } from "@electric-sql/pglite";
 import "./index.css";
+import { knex } from "knex";
+import ClientPgLite from "knex-pglite";
+import { drizzle } from "drizzle-orm/pglite";
 
 const root = createRoot(document.getElementById("root")!);
 
@@ -30,43 +34,47 @@ if ("serviceWorker" in navigator) {
             },
         );
 
-        const pg = new PGliteWorker(worker);
-        pg.exec("SELECT 1").then((res) => console.log(res));
-        console.log("Waiting for ready...");
+        const pg = new PGliteWorker(worker) as PGlite & PGliteWorker;
         await pg.waitReady;
 
-        console.log("Ready! Took", performance.now() - start, "ms");
-
-        console.log("Creating table...");
-        await pg.exec(`
-            CREATE TABLE IF NOT EXISTS test (
-            id SERIAL PRIMARY KEY,
-            name TEXT
-            );
-        `);
-
-        console.log("Inserting data...");
-        await pg.exec("INSERT INTO test (name) VALUES ('test');");
-
-        console.log("Selecting data...");
-        const res = await pg.exec(`
-            SELECT * FROM test;
-        `);
-
-        console.log(res);
-
-        // Transaction example:
-        console.log("Transaction example...");
-        await pg.transaction(async (tx) => {
-            await tx.exec("INSERT INTO test (name) VALUES ('test2');");
-            await tx.exec("INSERT INTO test (name) VALUES ('test3');");
-        });
-
-        console.log("Selecting data...");
-        const res2 = await pg.exec(`
-            SELECT * FROM test;
-        `);
-
-        console.log(res2);
+        // const db = drizzle(pg);
+        //
+        // pg.exec("SELECT 1").then((res) => console.log(res));
+        // console.log("Waiting for ready...");
+        // await pg.waitReady;
+        //
+        // console.log("Ready! Took", performance.now() - start, "ms");
+        //
+        // console.log("Creating table...");
+        // await pg.exec(`
+        //     CREATE TABLE IF NOT EXISTS test (
+        //     id SERIAL PRIMARY KEY,
+        //     name TEXT
+        //     );
+        // `);
+        //
+        // console.log("Inserting data...");
+        // await pg.exec("INSERT INTO test (name) VALUES ('test');");
+        //
+        // console.log("Selecting data...");
+        // const res = await pg.exec(`
+        //     SELECT * FROM test;
+        // `);
+        //
+        // console.log(res);
+        //
+        // // Transaction example:
+        // console.log("Transaction example...");
+        // await pg.transaction(async (tx) => {
+        //     await tx.exec("INSERT INTO test (name) VALUES ('test2');");
+        //     await tx.exec("INSERT INTO test (name) VALUES ('test3');");
+        // });
+        //
+        // console.log("Selecting data...");
+        // const res2 = await pg.exec(`
+        //     SELECT * FROM test;
+        // `);
+        //
+        // console.log(res2);
     });
 }

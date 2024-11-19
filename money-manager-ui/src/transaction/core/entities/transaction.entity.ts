@@ -6,16 +6,18 @@ type TransactionEntity = {
     description: string;
     price: number;
     currency: string;
+    type: "expense" | "income";
 };
 
 export class Transaction {
-    public datetime: Date;
-    public category: string;
-    public description: string;
-    public price: number;
-    public currency: string;
-    public id: string;
-    public subcategory?: string;
+    datetime: Date;
+    category: string;
+    description: string;
+    price: number;
+    currency: string;
+    id: string;
+    subcategory?: string;
+    type: "expense" | "income";
 
     constructor(transaction: TransactionEntity) {
         this.datetime = transaction.datetime;
@@ -25,5 +27,6 @@ export class Transaction {
         this.category = transaction.category;
         this.price = transaction.price;
         this.subcategory = transaction.subcategory;
+        this.type = transaction.type;
     }
 }

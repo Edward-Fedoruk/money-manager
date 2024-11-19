@@ -3,7 +3,7 @@ import {
     TransactionPresenter,
     TransactionViewModel,
 } from "../../transaction/adapters/presenters/transaction.presenter";
-import { SaveTransactionUseCase } from "../../transaction/core/use-cases/save-transaction";
+import { SaveTransactionUseCase } from "../../transaction/core/use-cases/save-transaction.use-case";
 import { TransactionItem } from "../components/day-transactions-list";
 import { create } from "zustand";
 
@@ -21,6 +21,7 @@ export const useSaveTransaction = () => {
     const saveTransaction = (transaction: TransactionItem) => {
         transactionUseCase.execute(
             {
+                type: transaction.money > 0 ? "income" : "expense",
                 currency: transaction.moneySign,
                 category: transaction.category,
                 price: transaction.money,

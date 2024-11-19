@@ -9,10 +9,8 @@ export type TransactionPresenterRequestModel = {
 };
 
 export interface ITransactionPresenter {
-    presentSavedTransaction(
-        transaction: TransactionPresenterRequestModel,
-    ): void;
-    presentTransactionFailure(
+    present(transaction: TransactionPresenterRequestModel): void;
+    presentFailure(
         transaction: Omit<TransactionPresenterRequestModel, "id">,
         error: string,
     ): void;
