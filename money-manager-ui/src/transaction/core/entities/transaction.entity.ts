@@ -1,8 +1,9 @@
+import { CategoryEntity } from "../../../categories/core/entities/category.entity";
+
 type TransactionEntity = {
     datetime: Date;
-    category: string;
-    id: string;
-    subcategory?: string;
+    category: CategoryEntity;
+    subcategory?: CategoryEntity;
     description: string;
     price: number;
     currency: string;
@@ -11,19 +12,17 @@ type TransactionEntity = {
 
 export class Transaction {
     datetime: Date;
-    category: string;
+    category: CategoryEntity;
     description: string;
     price: number;
     currency: string;
-    id: string;
-    subcategory?: string;
+    subcategory?: CategoryEntity;
     type: "expense" | "income";
 
     constructor(transaction: TransactionEntity) {
         this.datetime = transaction.datetime;
         this.currency = transaction.currency;
         this.description = transaction.description;
-        this.id = transaction.id;
         this.category = transaction.category;
         this.price = transaction.price;
         this.subcategory = transaction.subcategory;

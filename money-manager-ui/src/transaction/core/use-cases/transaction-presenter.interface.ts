@@ -5,13 +5,9 @@ export type TransactionPresenterRequestModel = {
     description: string;
     price: number;
     currency: string;
-    id: string;
 };
 
 export interface ITransactionPresenter {
     present(transaction: TransactionPresenterRequestModel): void;
-    presentFailure(
-        transaction: Omit<TransactionPresenterRequestModel, "id">,
-        error: string,
-    ): void;
+    presentFailure(transaction: Omit<TransactionPresenterRequestModel, "id">, error: string): void;
 }

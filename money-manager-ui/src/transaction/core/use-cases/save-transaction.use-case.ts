@@ -1,15 +1,18 @@
 import { IUseCase } from "../../../common/types";
 import { Transaction } from "../entities/transaction.entity";
 import { ITransactionPresenter } from "./transaction-presenter.interface";
-import {
-    ITransactionRepository,
-    RepositoryError,
-} from "./transaction-repository.interface";
+import { ITransactionRepository, RepositoryError } from "./transaction-repository.interface";
 
 type CreateTransactionRequestModel = {
     datetime: Date;
-    category: string;
-    subcategory: string;
+    category: {
+        id: number;
+        name: string;
+    };
+    subcategory?: {
+        id: number;
+        name: string;
+    };
     type: "income" | "expense";
     description: string;
     price: number;
@@ -23,7 +26,7 @@ export class SaveTransactionUseCase implements IUseCase {
         transactionRequestModel: CreateTransactionRequestModel,
         transactionPresenter: ITransactionPresenter,
     ) {
-        const transactionWithoutId: Omit<Transaction, "id"> = {
+        const transaction: Transaction = {
             datetime: transactionRequestModel.datetime,
             subcategory: transactionRequestModel.subcategory,
             type: transactionRequestModel.type,
@@ -34,22 +37,40 @@ export class SaveTransactionUseCase implements IUseCase {
         };
 
         try {
-            const transactionId =
-                await this.repository.saveTransaction(transactionWithoutId);
+            await this.repository.saveTransaction({
+                ...transaction,
+                subcategory: {
+                    id: transactionRequestModel.subcategory?.id,
+                    name: transaction?.subcategory?.name,
+                },
+                category: {
+                    id: transactionRequestModel.category.id,
+                    name: transactionRequestModel.category.name,
+                },
+            });
 
             transactionPresenter.present({
-                ...transactionWithoutId,
-                id: transactionId,
+                ...transaction,
+                category: transaction.category.name,
+                subcategory: transaction.subcategory?.name,
             });
         } catch (error: unknown) {
             if (error instanceof RepositoryError) {
                 transactionPresenter.presentFailure(
-                    transactionWithoutId,
+                    {
+                        ...transaction,
+                        category: transaction.category.name,
+                        subcategory: transaction.subcategory?.name,
+                    },
                     "Unable to save transaction",
                 );
             }
             transactionPresenter.presentFailure(
-                transactionWithoutId,
+                {
+                    ...transaction,
+                    category: transaction.category.name,
+                    subcategory: transaction.subcategory?.name,
+                },
                 "something when saving transaction unexpected happened",
             );
         }

@@ -1,27 +1,28 @@
 export type TransactionOperationModel = {
     datetime: Date;
-    category: string;
-    subcategory?: string;
+    category: {
+        id: number;
+        name: string;
+    };
+    subcategory?: {
+        id?: number;
+        name?: string;
+    };
     description: string;
     price: number;
     currency: string;
-    id: string;
+    id: number;
     type: "income" | "expense";
 };
 
-type SaveTransactionResponseModel = TransactionOperationModel["id"];
-
 export type UpdateTransactionResponseModel = TransactionOperationModel;
 
-export type UpdateTransactionRequestModel =
-    Partial<TransactionOperationModel> & { id: string };
+export type UpdateTransactionRequestModel = Partial<TransactionOperationModel> & { id: string };
 
 export type SaveTransactionRequestModel = Omit<TransactionOperationModel, "id">;
 
 export interface ITransactionRepository {
-    saveTransaction(
-        transaction: SaveTransactionRequestModel,
-    ): Promise<SaveTransactionResponseModel>;
+    saveTransaction(transaction: SaveTransactionRequestModel): Promise<void>;
 
     deleteTransaction(transactionId: string): Promise<void>;
 

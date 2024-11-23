@@ -1,0 +1,10 @@
+[
+  {
+    "sql": [
+      "CREATE TABLE IF NOT EXISTS \"Transactions\" (\n\t\"id\" serial PRIMARY KEY NOT NULL,\n\tCONSTRAINT \"Transactions_id_unique\" UNIQUE(\"id\")\n);\n"
+    ],
+    "bps": true,
+    "folderMillis": 1732307545671,
+    "hash": "faca439fc9d0a98ee66986abe94528f9dc9027d262fbe4c3ec35edee9f45e9bb"
+  }
+]
