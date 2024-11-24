@@ -5,10 +5,10 @@ import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const migrationsFolder = join(__dirname, '../src/db/');
+const migrationsFolder = join(__dirname, '../src/db/migrations');
 const migrations = readMigrationFiles({ migrationsFolder });
 
-const outputPath = join(__dirname, '../src/db/migrations.json');
+const outputPath = join(__dirname, '../src/db/migrations/migrations.json');
 
 try {
     await writeFile(outputPath, JSON.stringify(migrations, null, 2));

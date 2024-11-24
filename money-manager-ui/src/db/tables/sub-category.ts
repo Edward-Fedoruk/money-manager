@@ -4,7 +4,7 @@ import { Categories } from "./categories";
 
 export const SubCategories = pgTable("Sub_categories", {
     id: serial().primaryKey().unique(),
-    name: text().unique(),
+    name: text().unique().notNull(),
     categoryId: integer()
         .notNull()
         .references(() => Categories.id, { onDelete: "cascade" }),

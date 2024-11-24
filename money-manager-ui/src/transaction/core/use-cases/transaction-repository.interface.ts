@@ -1,3 +1,6 @@
+import { Identifier } from "../../../common/types";
+import { Transaction } from "../entities/transaction.entity";
+
 export type TransactionOperationModel = {
     datetime: Date;
     category: {
@@ -8,23 +11,23 @@ export type TransactionOperationModel = {
         id?: number;
         name?: string;
     };
-    description: string;
+    description?: string;
     price: number;
     currency: string;
     id: number;
     type: "income" | "expense";
 };
 
-export type UpdateTransactionResponseModel = TransactionOperationModel;
+export type UpdateTransactionResponseModel = Transaction;
 
-export type UpdateTransactionRequestModel = Partial<TransactionOperationModel> & { id: string };
+export type UpdateTransactionRequestModel = Partial<Transaction>;
 
 export type SaveTransactionRequestModel = Omit<TransactionOperationModel, "id">;
 
 export interface ITransactionRepository {
     saveTransaction(transaction: SaveTransactionRequestModel): Promise<void>;
 
-    deleteTransaction(transactionId: string): Promise<void>;
+    deleteTransaction(transactionId: TransactionOperationModel["id"]): Promise<void>;
 
     getTransactionsByDateRange(
         startDate: Date,
@@ -33,6 +36,7 @@ export interface ITransactionRepository {
 
     updateTransaction(
         transaction: UpdateTransactionRequestModel,
+        transactionId: Identifier,
     ): Promise<UpdateTransactionResponseModel>;
 }
 

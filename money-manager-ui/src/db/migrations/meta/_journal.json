@@ -8,6 +8,20 @@
       "when": 1732307545671,
       "tag": "0000_sloppy_dormammu",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1732474158042,
+      "tag": "0001_quick_mac_gargan",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1732474298204,
+      "tag": "0002_parallel_killraven",
+      "breakpoints": true
     }
   ]
 }

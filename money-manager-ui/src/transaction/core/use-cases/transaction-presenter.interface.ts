@@ -2,7 +2,7 @@ export type TransactionPresenterRequestModel = {
     datetime: Date;
     category: string;
     subcategory?: string;
-    description: string;
+    description?: string;
     price: number;
     currency: string;
 };

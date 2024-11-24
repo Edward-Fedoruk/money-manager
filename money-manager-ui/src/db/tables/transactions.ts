@@ -10,16 +10,19 @@ export const Transactions = pgTable(
     "Transactions",
     {
         id: serial().primaryKey().unique(),
-        categoryId: integer().references(() => Categories.id, {
-            onDelete: "set null",
-        }),
-        subcategory: integer().references(() => SubCategories.id, {
+        categoryId: integer()
+            .references(() => Categories.id, {
+                onDelete: "set default",
+            })
+            .notNull()
+            .default(1),
+        subcategoryId: integer().references(() => SubCategories.id, {
             onDelete: "set null",
         }),
         description: text(),
-        price: numeric({ precision: 2 }),
-        currency: text(),
-        type: transactionType(),
+        price: numeric({ precision: 2 }).notNull(),
+        currency: text().notNull(),
+        type: transactionType().notNull(),
         ...timestamps,
     },
     (table) => ({

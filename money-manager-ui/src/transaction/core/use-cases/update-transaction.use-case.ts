@@ -1,36 +1,34 @@
 import { IReportPresenter } from "../../../common/entities/report-presenter.interface";
-import { IUseCase } from "../../../common/types";
+import { Identifier, IUseCase } from "../../../common/types";
 import { Transaction } from "../entities/transaction.entity";
 import { ITransactionPresenter } from "./transaction-presenter.interface";
-import {
-    ITransactionRepository,
-    RepositoryError,
-} from "./transaction-repository.interface";
-
-type UpdateTransactionRequestModel = {
-    datetime?: Date;
-    category?: string;
-    subcategory?: string;
-    description?: string;
-    price?: number;
-    currency?: string;
-    id: string;
-};
+import { ITransactionRepository, RepositoryError } from "./transaction-repository.interface";
 
 export class UpdateTransactionUseCase implements IUseCase {
     constructor(private repository: ITransactionRepository) {}
 
     async execute(
-        transactionRequest: UpdateTransactionRequestModel,
+        transactionRequest: Partial<Transaction>,
+        transactionId: Identifier,
         transactionPresenter: ITransactionPresenter,
         reportPresenter: IReportPresenter,
     ) {
         try {
-            const transactionResult: Transaction =
-                await this.repository.updateTransaction(transactionRequest);
+            const transactionResult = await this.repository.updateTransaction(
+                transactionRequest,
+                transactionId,
+            );
 
             reportPresenter.presentSuccess("transaction updated successfully");
-            transactionPresenter.present(transactionResult);
+
+            transactionPresenter.present({
+                datetime: transactionResult.datetime,
+                currency: transactionResult.currency,
+                price: transactionResult.price,
+                category: transactionResult.category.name,
+                subcategory: transactionResult.subcategory?.name,
+                description: transactionResult.description,
+            });
         } catch (error: unknown) {
             if (error instanceof RepositoryError) {
                 reportPresenter.presentFailuer("failed to update transaction");

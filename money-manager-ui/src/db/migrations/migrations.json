@@ -6,5 +6,34 @@
     "bps": true,
     "folderMillis": 1732307545671,
     "hash": "faca439fc9d0a98ee66986abe94528f9dc9027d262fbe4c3ec35edee9f45e9bb"
+  },
+  {
+    "sql": [
+      "ALTER TABLE \"Transactions\" ADD COLUMN \"categoryId\" integer DEFAULT 1 NOT NULL;",
+      "\nALTER TABLE \"Transactions\" ADD COLUMN \"subcategoryId\" integer;",
+      "\nALTER TABLE \"Transactions\" ADD COLUMN \"description\" text;",
+      "\nALTER TABLE \"Transactions\" ADD COLUMN \"price\" numeric(2) NOT NULL;",
+      "\nALTER TABLE \"Transactions\" ADD COLUMN \"currency\" text NOT NULL;",
+      "\nALTER TABLE \"Transactions\" ADD COLUMN \"type\" \"transaction_type\" NOT NULL;",
+      "\nALTER TABLE \"Transactions\" ADD COLUMN \"updatedAt\" timestamp DEFAULT (CURRENT_TIMESTAMP);",
+      "\nALTER TABLE \"Transactions\" ADD COLUMN \"createdAt\" timestamp DEFAULT now() NOT NULL;",
+      "\nDO $$ BEGIN\n ALTER TABLE \"Transactions\" ADD CONSTRAINT \"Transactions_categoryId_Categories_id_fk\" FOREIGN KEY (\"categoryId\") REFERENCES \"public\".\"Categories\"(\"id\") ON DELETE set default ON UPDATE no action;\nEXCEPTION\n WHEN duplicate_object THEN null;\nEND $$;\n",
+      "\nDO $$ BEGIN\n ALTER TABLE \"Transactions\" ADD CONSTRAINT \"Transactions_subcategoryId_Sub_categories_id_fk\" FOREIGN KEY (\"subcategoryId\") REFERENCES \"public\".\"Sub_categories\"(\"id\") ON DELETE set null ON UPDATE no action;\nEXCEPTION\n WHEN duplicate_object THEN null;\nEND $$;\n",
+      "\nALTER TABLE \"Transactions\" ADD CONSTRAINT \"description_size_check\" CHECK (\"Transactions\".\"description\" < 255);"
+    ],
+    "bps": true,
+    "folderMillis": 1732474158042,
+    "hash": "aa9330291b029daa23f0bef90af22cd291d581f2a3be8ec5f63b7d737234bdef"
+  },
+  {
+    "sql": [
+      "CREATE TABLE IF NOT EXISTS \"Categories\" (\n\t\"id\" serial PRIMARY KEY NOT NULL,\n\t\"name\" text NOT NULL,\n\t\"updatedAt\" timestamp DEFAULT (CURRENT_TIMESTAMP),\n\t\"createdAt\" timestamp DEFAULT now() NOT NULL,\n\tCONSTRAINT \"Categories_id_unique\" UNIQUE(\"id\"),\n\tCONSTRAINT \"Categories_name_unique\" UNIQUE(\"name\")\n);\n",
+      "\nCREATE TABLE IF NOT EXISTS \"Sub_categories\" (\n\t\"id\" serial PRIMARY KEY NOT NULL,\n\t\"name\" text NOT NULL,\n\t\"categoryId\" integer NOT NULL,\n\t\"updatedAt\" timestamp DEFAULT (CURRENT_TIMESTAMP),\n\t\"createdAt\" timestamp DEFAULT now() NOT NULL,\n\tCONSTRAINT \"Sub_categories_id_unique\" UNIQUE(\"id\"),\n\tCONSTRAINT \"Sub_categories_name_unique\" UNIQUE(\"name\")\n);\n",
+      "\nDO $$ BEGIN\n ALTER TABLE \"Sub_categories\" ADD CONSTRAINT \"Sub_categories_categoryId_Categories_id_fk\" FOREIGN KEY (\"categoryId\") REFERENCES \"public\".\"Categories\"(\"id\") ON DELETE cascade ON UPDATE no action;\nEXCEPTION\n WHEN duplicate_object THEN null;\nEND $$;\n",
+      "\nINSERT INTO \"Categories\" (\"name\") VALUES (\"Other\")\n"
+    ],
+    "bps": true,
+    "folderMillis": 1732474298204,
+    "hash": "1f8da3b1da4c70fbeb049ad4a5d52075ab671a2f85c1f4b208fa4343eb737d69"
   }
 ]

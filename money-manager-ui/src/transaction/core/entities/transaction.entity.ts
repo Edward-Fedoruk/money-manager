@@ -4,7 +4,7 @@ type TransactionEntity = {
     datetime: Date;
     category: CategoryEntity;
     subcategory?: CategoryEntity;
-    description: string;
+    description?: string;
     price: number;
     currency: string;
     type: "expense" | "income";
@@ -13,7 +13,7 @@ type TransactionEntity = {
 export class Transaction {
     datetime: Date;
     category: CategoryEntity;
-    description: string;
+    description?: string;
     price: number;
     currency: string;
     subcategory?: CategoryEntity;

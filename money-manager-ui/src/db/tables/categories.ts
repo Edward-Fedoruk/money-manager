@@ -3,6 +3,6 @@ import { timestamps } from "./timestamps.helper";
 
 export const Categories = pgTable("Categories", {
     id: serial().primaryKey().unique(),
-    name: text().unique(),
+    name: text().unique().notNull(),
     ...timestamps,
 });
