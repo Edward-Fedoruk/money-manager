@@ -1,9 +1,137 @@
 {
-  "id": "e7da72f6-4c86-4f57-82f5-4a54db6f2239",
+  "id": "bafc15f3-8cbb-4e79-bf03-1c84c0d2221c",
   "prevId": "1c2e7ef5-e7b1-485e-a492-c5e87d5662d7",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
+    "public.Categories": {
+      "name": "Categories",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "(CURRENT_TIMESTAMP)"
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "Categories_id_unique": {
+          "name": "Categories_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "id"
+          ]
+        },
+        "Categories_name_unique": {
+          "name": "Categories_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "name"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.Sub_categories": {
+      "name": "Sub_categories",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "categoryId": {
+          "name": "categoryId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "(CURRENT_TIMESTAMP)"
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "Sub_categories_categoryId_Categories_id_fk": {
+          "name": "Sub_categories_categoryId_Categories_id_fk",
+          "tableFrom": "Sub_categories",
+          "tableTo": "Categories",
+          "columnsFrom": [
+            "categoryId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "Sub_categories_id_unique": {
+          "name": "Sub_categories_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "id"
+          ]
+        },
+        "Sub_categories_name_unique": {
+          "name": "Sub_categories_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "name"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.Transactions": {
       "name": "Transactions",
       "schema": "",
@@ -47,7 +175,7 @@
         },
         "type": {
           "name": "type",
-          "type": "transaction_type",
+          "type": "transactiontype",
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": true
@@ -110,13 +238,22 @@
       "checkConstraints": {
         "description_size_check": {
           "name": "description_size_check",
-          "value": "\"Transactions\".\"description\" < 255"
+          "value": "char_length(\"Transactions\".\"description\") <= 255"
         }
       },
       "isRLSEnabled": false
     }
   },
-  "enums": {},
+  "enums": {
+    "public.transactiontype": {
+      "name": "transactiontype",
+      "schema": "public",
+      "values": [
+        "expense",
+        "income"
+      ]
+    }
+  },
   "schemas": {},
   "sequences": {},
   "roles": {},

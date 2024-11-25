@@ -12,15 +12,15 @@
     {
       "idx": 1,
       "version": "7",
-      "when": 1732474158042,
-      "tag": "0001_quick_mac_gargan",
+      "when": 1732568202479,
+      "tag": "0001_powerful_jetstream",
       "breakpoints": true
     },
     {
       "idx": 2,
       "version": "7",
-      "when": 1732474298204,
-      "tag": "0002_parallel_killraven",
+      "when": 1732569275675,
+      "tag": "0002_seed-categories",
       "breakpoints": true
     }
   ]

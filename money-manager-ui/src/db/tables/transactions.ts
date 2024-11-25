@@ -4,7 +4,7 @@ import { Categories } from "./categories";
 import { SubCategories } from "./sub-category";
 import { sql } from "drizzle-orm";
 
-export const transactionType = pgEnum("transaction_type", ["expense", "income"]);
+export const transactionTypeEnum = pgEnum("transactiontype", ["expense", "income"]);
 
 export const Transactions = pgTable(
     "Transactions",
@@ -22,10 +22,13 @@ export const Transactions = pgTable(
         description: text(),
         price: numeric({ precision: 2 }).notNull(),
         currency: text().notNull(),
-        type: transactionType().notNull(),
+        type: transactionTypeEnum().notNull(),
         ...timestamps,
     },
     (table) => ({
-        checkConstraint: check("description_size_check", sql`${table.description} < 255`),
+        checkConstraint: check(
+            "description_size_check",
+            sql`char_length(${table.description}) <= 255`,
+        ),
     }),
 );

@@ -5,7 +5,7 @@ import { worker } from "@electric-sql/pglite/worker";
 worker({
     async init() {
         return new PGlite({
-            fs: new OpfsAhpFS("opfs-ahp://my-test-db2"),
+            fs: new OpfsAhpFS("opfs-ahp://monay_manager_db"),
         });
     },
 });

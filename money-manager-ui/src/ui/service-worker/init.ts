@@ -17,23 +17,23 @@ export const initDbWorker = () =>
                         type: "module",
                     });
 
-                    const worker = new Worker(
-                        new URL("./database.worker.ts", import.meta.url),
-                        {
-                            type: "module",
-                        },
-                    );
+                    const worker = new Worker(new URL("./database.worker.ts", import.meta.url), {
+                        type: "module",
+                    });
 
-                    const pg = new PGliteWorker(worker) as PGlite &
-                        PGliteWorker;
+                    const pg = new PGliteWorker(worker) as PGlite & PGliteWorker;
                     await pg.waitReady;
                     const db = drizzle({ client: pg, casing: "snake_case" });
 
                     // @ts-ignore
-                    db.dialect.migrate(migrations, db.session, {
+                    await db.dialect.migrate(migrations, db.session, {
                         migrationsTable: "drizzle_migrations",
                     } satisfies Omit<MigrationConfig, "migrationsFolder">);
 
+                    if (import.meta.env.DEV) {
+                        //@ts-ignore
+                        window.db = pg;
+                    }
                     resolve(db);
                 } catch {
                     reject();

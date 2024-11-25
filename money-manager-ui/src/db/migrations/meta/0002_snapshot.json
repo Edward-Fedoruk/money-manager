@@ -1,6 +1,6 @@
 {
-  "id": "db4cb162-448e-49b1-a259-a38952f3f904",
-  "prevId": "e7da72f6-4c86-4f57-82f5-4a54db6f2239",
+  "id": "dcf0aa97-7883-452d-976e-5528c655fcca",
+  "prevId": "bafc15f3-8cbb-4e79-bf03-1c84c0d2221c",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -41,17 +41,17 @@
       "uniqueConstraints": {
         "Categories_id_unique": {
           "name": "Categories_id_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "id"
-          ]
+          ],
+          "nullsNotDistinct": false
         },
         "Categories_name_unique": {
           "name": "Categories_name_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "name"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       },
       "policies": {},
@@ -100,32 +100,32 @@
         "Sub_categories_categoryId_Categories_id_fk": {
           "name": "Sub_categories_categoryId_Categories_id_fk",
           "tableFrom": "Sub_categories",
-          "tableTo": "Categories",
           "columnsFrom": [
             "categoryId"
           ],
+          "tableTo": "Categories",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "Sub_categories_id_unique": {
           "name": "Sub_categories_id_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "id"
-          ]
+          ],
+          "nullsNotDistinct": false
         },
         "Sub_categories_name_unique": {
           "name": "Sub_categories_name_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "name"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       },
       "policies": {},
@@ -175,7 +175,7 @@
         },
         "type": {
           "name": "type",
-          "type": "transaction_type",
+          "type": "transactiontype",
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": true
@@ -200,56 +200,65 @@
         "Transactions_categoryId_Categories_id_fk": {
           "name": "Transactions_categoryId_Categories_id_fk",
           "tableFrom": "Transactions",
-          "tableTo": "Categories",
           "columnsFrom": [
             "categoryId"
           ],
+          "tableTo": "Categories",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "set default",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "set default"
         },
         "Transactions_subcategoryId_Sub_categories_id_fk": {
           "name": "Transactions_subcategoryId_Sub_categories_id_fk",
           "tableFrom": "Transactions",
-          "tableTo": "Sub_categories",
           "columnsFrom": [
             "subcategoryId"
           ],
+          "tableTo": "Sub_categories",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "set null"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "Transactions_id_unique": {
           "name": "Transactions_id_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "id"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       },
       "policies": {},
       "checkConstraints": {
         "description_size_check": {
           "name": "description_size_check",
-          "value": "\"Transactions\".\"description\" < 255"
+          "value": "char_length(\"Transactions\".\"description\") <= 255"
         }
       },
       "isRLSEnabled": false
     }
   },
-  "enums": {},
+  "enums": {
+    "public.transactiontype": {
+      "name": "transactiontype",
+      "schema": "public",
+      "values": [
+        "expense",
+        "income"
+      ]
+    }
+  },
   "schemas": {},
+  "views": {},
   "sequences": {},
   "roles": {},
   "policies": {},
-  "views": {},
   "_meta": {
     "columns": {},
     "schemas": {},
