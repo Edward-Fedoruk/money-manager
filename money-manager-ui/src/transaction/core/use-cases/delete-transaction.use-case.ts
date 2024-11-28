@@ -3,12 +3,12 @@ import { IUseCase } from "../../../common/types";
 import {
     ITransactionRepository,
     RepositoryError,
-} from "./transaction-repository.interface";
+} from "../interfaces/transaction-repository.interface";
 
 export class DeleteTransactionUseCase implements IUseCase {
     constructor(private repository: ITransactionRepository) {}
 
-    async execute(transactionId: string, reportPresenter: IReportPresenter) {
+    async execute(transactionId: number, reportPresenter: IReportPresenter) {
         try {
             await this.repository.deleteTransaction(transactionId);
 

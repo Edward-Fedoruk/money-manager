@@ -1,32 +1,42 @@
 import { IReportPresenter } from "../../../common/entities/report-presenter.interface";
-import { Identifier, IUseCase } from "../../../common/types";
+import { RepositoryError } from "../../../common/errors/repository";
+import { IUseCase } from "../../../common/types";
 import { Transaction } from "../entities/transaction.entity";
-import { ITransactionPresenter } from "./transaction-presenter.interface";
-import { ITransactionRepository, RepositoryError } from "./transaction-repository.interface";
+import { ITransactionPresenter } from "../interfaces/transaction-presenter.interface";
+import { ITransactionRepository } from "../interfaces/transaction-repository.interface";
 
 export class UpdateTransactionUseCase implements IUseCase {
     constructor(private repository: ITransactionRepository) {}
 
     async execute(
         transactionRequest: Partial<Transaction>,
-        transactionId: Identifier,
+        ids: {
+            transactionId: number;
+            categoryId?: number;
+            subCategoryId?: number;
+        },
         transactionPresenter: ITransactionPresenter,
         reportPresenter: IReportPresenter,
     ) {
         try {
-            const transactionResult = await this.repository.updateTransaction(
-                transactionRequest,
-                transactionId,
-            );
+            const transactionResult = await this.repository.updateTransaction({
+                transaction: transactionRequest,
+                metadata: {
+                    transactionId: ids.transactionId,
+                    subCategoryId: ids.subCategoryId,
+                    categoryId: ids.categoryId,
+                },
+            });
 
             reportPresenter.presentSuccess("transaction updated successfully");
 
             transactionPresenter.present({
+                id: ids.transactionId,
                 datetime: transactionResult.datetime,
                 currency: transactionResult.currency,
                 price: transactionResult.price,
                 category: transactionResult.category.name,
-                subcategory: transactionResult.subcategory?.name,
+                subcategory: transactionResult.category.subCategory?.name,
                 description: transactionResult.description,
             });
         } catch (error: unknown) {

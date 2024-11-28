@@ -1,5 +1,6 @@
 export type TransactionPresenterRequestModel = {
     datetime: Date;
+    id: number;
     category: string;
     subcategory?: string;
     description?: string;

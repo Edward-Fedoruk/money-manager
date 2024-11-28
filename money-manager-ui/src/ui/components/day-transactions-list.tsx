@@ -3,6 +3,7 @@ import { SummaryListItem } from "./summary-list-item";
 import { TransactionListItem } from "./transaction-list-item";
 
 export type TransactionItem = {
+    id: number;
     date: Date;
     category: string;
     subCategory: string;
@@ -17,13 +18,8 @@ type Props = {
     className: string;
 };
 
-export const DayTransactionsList: FC<Props> = ({
-    date,
-    transactions,
-    className,
-}) => {
-    const moneySign =
-        transactions.find(({ moneySign }) => moneySign)?.moneySign ?? "$";
+export const DayTransactionsList: FC<Props> = ({ date, transactions, className }) => {
+    const moneySign = transactions.find(({ moneySign }) => moneySign)?.moneySign ?? "$";
 
     const moneySpentPerDay = transactions
         .map(({ money }) => money)
@@ -35,18 +31,16 @@ export const DayTransactionsList: FC<Props> = ({
                 moneySpent={`${moneySign} ${moneySpentPerDay}`}
                 date={new Date(date)}
             />
-            {transactions.map(
-                ({ note, moneySign, subCategory, category, money }) => (
-                    <TransactionListItem
-                        key={note + money + category}
-                        isSelected={false}
-                        note={note}
-                        subCategory={subCategory}
-                        category={category}
-                        money={`${moneySign} ${money}`}
-                    />
-                ),
-            )}
+            {transactions.map(({ note, moneySign, subCategory, category, money }) => (
+                <TransactionListItem
+                    key={note + money + category}
+                    isSelected={false}
+                    note={note}
+                    subCategory={subCategory}
+                    category={category}
+                    money={`${moneySign} ${money}`}
+                />
+            ))}
         </ul>
     );
 };

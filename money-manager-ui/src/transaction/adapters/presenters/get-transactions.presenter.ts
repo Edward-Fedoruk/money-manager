@@ -2,7 +2,7 @@ import { Dispatcher } from "../../../common/types";
 import {
     IGetTransactionsByDateRangePresenter,
     GetByDateRangePresenterRequestModel,
-} from "../../core/use-cases/get-transactions-presenter.interface";
+} from "../../core/interfaces/get-transactions-presenter.interface";
 
 type Transaction = {
     datetime: Date;
@@ -26,9 +26,7 @@ export type TransactionsViewModel = {
     };
 };
 
-export class GetTransactionsPresenter
-    implements IGetTransactionsByDateRangePresenter
-{
+export class GetTransactionsPresenter implements IGetTransactionsByDateRangePresenter {
     viewModel: TransactionsViewModel = {};
 
     constructor(private dispatch: Dispatcher<TransactionsViewModel>) {}

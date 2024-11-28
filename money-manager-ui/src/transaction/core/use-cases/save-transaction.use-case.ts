@@ -1,17 +1,20 @@
+import { Category } from "../../../categories/core/entities/category.entity";
+import { ICategoryRepository } from "../../../categories/core/interfaces/category-repository.interface";
+import { RepositoryError } from "../../../common/errors/repository";
 import { IUseCase } from "../../../common/types";
 import { Transaction } from "../entities/transaction.entity";
-import { ITransactionPresenter } from "./transaction-presenter.interface";
-import { ITransactionRepository, RepositoryError } from "./transaction-repository.interface";
+import { ITransactionPresenter } from "../interfaces/transaction-presenter.interface";
+import { ITransactionRepository } from "../interfaces//transaction-repository.interface";
 
 type CreateTransactionRequestModel = {
     datetime: Date;
     category: {
-        id: number;
         name: string;
+        id: number;
     };
     subcategory?: {
-        id: number;
         name: string;
+        id: number;
     };
     type: "income" | "expense";
     description: string;
@@ -20,56 +23,89 @@ type CreateTransactionRequestModel = {
 };
 
 export class SaveTransactionUseCase implements IUseCase {
-    constructor(private repository: ITransactionRepository) {}
+    constructor(
+        private transactionRepository: ITransactionRepository,
+        private categoryRepository: ICategoryRepository,
+    ) {}
 
-    async execute(
-        transactionRequestModel: CreateTransactionRequestModel,
-        transactionPresenter: ITransactionPresenter,
-    ) {
-        const transaction: Transaction = {
-            datetime: transactionRequestModel.datetime,
-            subcategory: transactionRequestModel.subcategory,
-            type: transactionRequestModel.type,
-            description: transactionRequestModel.description,
-            price: transactionRequestModel.price,
-            currency: transactionRequestModel.currency,
-            category: transactionRequestModel.category,
-        };
+    async execute(requestModel: CreateTransactionRequestModel, presenter: ITransactionPresenter) {
+        const transaction: Transaction = new Transaction({
+            datetime: requestModel.datetime,
+            type: requestModel.type,
+            description: requestModel.description,
+            price: requestModel.price,
+            currency: requestModel.currency,
+            category: new Category({
+                name: requestModel.category.name,
+                subCategory: requestModel.subcategory,
+            }),
+        });
 
         try {
-            await this.repository.saveTransaction({
-                ...transaction,
-                subcategory: {
-                    id: transactionRequestModel.subcategory?.id,
-                    name: transaction?.subcategory?.name,
-                },
-                category: {
-                    id: transactionRequestModel.category.id,
-                    name: transactionRequestModel.category.name,
-                },
-            });
+            const categoryFindResult = await this.categoryRepository.findCategory(
+                transaction.category,
+            );
 
-            transactionPresenter.present({
-                ...transaction,
-                category: transaction.category.name,
-                subcategory: transaction.subcategory?.name,
-            });
-        } catch (error: unknown) {
-            if (error instanceof RepositoryError) {
-                transactionPresenter.presentFailure(
+            if (!categoryFindResult) {
+                presenter.presentFailure(
                     {
                         ...transaction,
                         category: transaction.category.name,
-                        subcategory: transaction.subcategory?.name,
+                        subcategory: transaction.category.subCategories?.[0]?.name,
+                    },
+                    "category does not exits",
+                );
+                return;
+            }
+
+            if (requestModel.subcategory?.name) {
+                const isSubCategoryExist = categoryFindResult.category?.subCategories
+                    ?.map((sc) => sc.name)
+                    .includes(requestModel.subcategory.name);
+
+                if (!isSubCategoryExist) {
+                    presenter.presentFailure(
+                        {
+                            ...transaction,
+                            category: transaction.category.name,
+                            subcategory: transaction.category.subCategories?.[0]?.name,
+                        },
+                        "category does not exits",
+                    );
+                    return;
+                }
+            }
+
+            const transactionId = await this.transactionRepository.saveTransaction({
+                transaction,
+                metadata: {
+                    categoryId: requestModel.category.id,
+                    subCategoryId: requestModel.subcategory?.id,
+                },
+            });
+
+            presenter.present({
+                ...transaction,
+                id: transactionId,
+                category: transaction.category.name,
+                subcategory: transaction.category?.subCategories?.[0]?.name,
+            });
+        } catch (error: unknown) {
+            if (error instanceof RepositoryError) {
+                presenter.presentFailure(
+                    {
+                        ...transaction,
+                        category: transaction.category.name,
+                        subcategory: requestModel.subcategory?.name,
                     },
                     "Unable to save transaction",
                 );
             }
-            transactionPresenter.presentFailure(
+            presenter.presentFailure(
                 {
                     ...transaction,
                     category: transaction.category.name,
-                    subcategory: transaction.subcategory?.name,
+                    subcategory: requestModel.subcategory?.name,
                 },
                 "something when saving transaction unexpected happened",
             );

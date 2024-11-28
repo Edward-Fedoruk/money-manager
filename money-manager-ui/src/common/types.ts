@@ -1,5 +1,3 @@
-export type Identifier = number;
-
 export type Dispatcher<T = unknown, R = void> = (model?: T) => R;
 
 export interface IPresenter {

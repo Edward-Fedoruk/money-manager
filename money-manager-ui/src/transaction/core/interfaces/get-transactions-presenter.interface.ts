@@ -1,12 +1,4 @@
-type Transaction = {
-    datetime: Date;
-    category: string;
-    id: string;
-    subcategory?: string;
-    description: string;
-    price: number;
-    currency: string;
-};
+import { Transaction } from "../entities/transaction.entity";
 
 export type GetByDateRangePresenterRequestModel = {
     income: number;

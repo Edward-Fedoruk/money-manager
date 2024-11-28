@@ -2,7 +2,7 @@ import { Dispatcher } from "../../../common/types";
 import {
     ITransactionPresenter,
     TransactionPresenterRequestModel,
-} from "../../core/use-cases/transaction-presenter.interface";
+} from "../../core/interfaces/transaction-presenter.interface";
 
 export type TransactionViewModel = {
     errorMessage?: string;
@@ -11,14 +11,14 @@ export type TransactionViewModel = {
         category: string;
         subCategory?: string;
         price: number;
-        id: string;
+        id: number;
         formattedDate: {
             dayOfMonth: string;
             dayOfWeek: string;
         };
         currency: string;
         displayPrice: string;
-        note: string;
+        note?: string;
     };
 };
 
@@ -60,10 +60,7 @@ export class TransactionPresenter implements ITransactionPresenter {
         this.dispatch(this.viewModel);
     }
 
-    presentFailure(
-        _: Omit<TransactionPresenterRequestModel, "id">,
-        message: string,
-    ): void {
+    presentFailure(_: Omit<TransactionPresenterRequestModel, "id">, message: string): void {
         this.viewModel.errorMessage = `Error: ${message}`;
 
         this.dispatch(this.viewModel);
