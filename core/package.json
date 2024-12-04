@@ -1,0 +1,23 @@
+{
+  "name": "app-core",
+  "version": "0.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github-personal:Edward-Fedoruk/money-manager.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "exports": {
+    "./universal": "./dist/common/index.js",
+    "./categories": "./dist/categories/index.js",
+    "./transaction": "./dist/transaction/index.js"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2"
+  }
+}

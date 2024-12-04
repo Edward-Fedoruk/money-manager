@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noFallthroughCasesInSwitch": true,
+
+        "target": "ESNEXT",
+        "useDefineForClassFields": true,
+        "lib": ["ESNEXT"],
+        "module": "ESNext",
+        "skipLibCheck": true,
+        "declaration": true,
+
+        /* Bundler mode */
+        "moduleResolution": "bundler",
+        "outDir": "./dist"
+    }
+}
