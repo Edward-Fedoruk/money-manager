@@ -1,4 +1,4 @@
-import { IReportPresenter } from "../entities/report-presenter.interface";
+import { IReportPresenter } from "../interfaces/report-presenter.interface";
 import { Dispatcher } from "../types";
 
 export class ReportPresenter implements IReportPresenter {

@@ -2,5 +2,12 @@
   "name": "money-manager-workspaces",
   "version": "1.0.0",
   "description": "root workspace config",
-  "workspaces": ["ux", "core", "converter"]
+  "workspaces": [
+    "ux",
+    "core",
+    "converter"
+  ],
+  "dependencies": {
+    "react-hook-form": "^7.53.2"
+  }
 }

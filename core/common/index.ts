@@ -1,3 +1,2 @@
 export * from './errors/repository'
-export * from './entities/report-presenter.interface'
-export * from './types'
+export { IPresenter, Dispatcher } from './types'

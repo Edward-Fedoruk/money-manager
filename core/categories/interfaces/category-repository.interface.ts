@@ -1,10 +1,15 @@
 import { Category } from "../entities/category.entity";
 
+export type FindCategoryInput = {
+    category: Category;
+}
+export type FindCategoryOutput = {
+    category: Category | null;
+    metadata: { categoryId: number; subCategoryIds: number[] };
+}
+
 export interface ICategoryRepository {
     findCategory(
-        transaction: Category,
-    ): Promise<{
-        category: Category | null;
-        metadata: { categoryId: number; subCategoryIds: number[] };
-    }>;
+        category: FindCategoryInput,
+    ): Promise<FindCategoryOutput>;
 }

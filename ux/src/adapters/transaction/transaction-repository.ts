@@ -1,6 +1,6 @@
 import { eq, between, and } from "drizzle-orm";
 import { Transactions } from "../../db/schema";
-import { DrizzleDatabase } from "../../ui/service-worker/init";
+import { DrizzleDatabase } from "../../service-worker/init";
 import {
     DeleteTransactionRequestModel,
     GetTransactionByDateRangeResponseModel,
@@ -9,7 +9,7 @@ import {
     UpdateTransactionRequestModel,
     UpdateTransactionResponseModel,
 } from "app-core/transaction";
-import { Categories } from "app-core/transaction";
+import { Categories } from "../../db/tables/categories";
 import { SubCategories } from "../../db/tables/sub-category";
 import { RepositoryError } from "app-core/universal";
 
@@ -95,16 +95,16 @@ export class TransactionRepository implements ITransactionRepository {
         };
     }
 
-    async deleteTransaction({ metadate }: DeleteTransactionRequestModel): Promise<void> {
-        this.db.delete(Transactions).where(eq(Transactions.id, metadate.transactionId));
+    async deleteTransaction({ transactionId }: DeleteTransactionRequestModel): Promise<void> {
+        this.db.delete(Transactions).where(eq(Transactions.id, transactionId));
     }
 
-    async saveTransaction({ transaction, metadate }: SaveTransactionRequestModel): Promise<number> {
+    async saveTransaction({ transaction, metadata }: SaveTransactionRequestModel): Promise<number> {
         const [{ transactionId }] = await this.db
             .insert(Transactions)
             .values({
-                categoryId: metadate.categoryId,
-                subcategoryId: metadate.subCategoryId,
+                categoryId: metadata.categoryId,
+                subcategoryId: metadata.subCategoryId,
                 currency: transaction.currency,
                 price: transaction.price.toString(),
                 type: transaction.type,

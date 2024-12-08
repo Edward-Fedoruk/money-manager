@@ -1,12 +1,12 @@
-import { AddButton } from "./components/add-button";
 import { TabNavigation } from "./components/bottom-navigation";
-import { TransactionsView } from "./components/transactions-view";
+import { AddTransactionView } from "./views/add-transaction-view";
+// import { TransactionsView } from "./views/transactions-view";
 
 function App() {
     return (
         <>
-            <TransactionsView />
-            <AddButton />
+            <AddTransactionView />
+            {/* <TransactionsView /> */}
             <TabNavigation className="fixed w-full bottom-0" />
         </>
     );

@@ -1,4 +1,5 @@
-import { IUseCase, IReportPresenter } from "../../common";
+import { IUseCase } from "../../common/types";
+import { IReportPresenter } from "../../common/interfaces/report-presenter.interface";
 import { Transaction } from "../entities/transaction.entity";
 import { IGetTransactionsByDateRangePresenter } from "../interfaces/get-transactions-presenter.interface";
 import { ITransactionRepository } from "../interfaces/transaction-repository.interface";

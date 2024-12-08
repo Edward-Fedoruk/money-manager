@@ -12,9 +12,7 @@ export const PGliteDatabaseProvider: FC<{ children: ReactNode }> = ({ children }
         initDb.then(setState);
     }, []);
 
-    return state === null ? (
-        <div>Loading ...</div>
-    ) : (
+    return (
         <PGliteDatabaseContext.Provider value={state}>{children}</PGliteDatabaseContext.Provider>
     );
 };

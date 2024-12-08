@@ -1,4 +1,6 @@
-import { RepositoryError, IUseCase, IReportPresenter } from "../../common";
+import { RepositoryError } from "../../common";
+import { IReportPresenter } from "../../common/interfaces/report-presenter.interface";
+import { IUseCase } from '../../common/types'
 import { ITransactionRepository } from "../interfaces/transaction-repository.interface";
 
 export class DeleteTransactionUseCase implements IUseCase {

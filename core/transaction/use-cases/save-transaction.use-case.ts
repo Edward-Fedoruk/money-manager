@@ -1,5 +1,7 @@
-import { Category, ICategoryRepository } from "../../categories";
-import { RepositoryError, IUseCase } from "../../common";
+import { ICategoryRepository } from "../../categories";
+import { Category } from "../../categories/entities/category.entity";
+import { RepositoryError } from "../../common";
+import { IUseCase } from "../../common/types";
 import { Transaction } from "../entities/transaction.entity";
 import { ITransactionPresenter } from "../interfaces/transaction-presenter.interface";
 import { ITransactionRepository } from "../interfaces/transaction-repository.interface";
@@ -41,7 +43,7 @@ export class SaveTransactionUseCase implements IUseCase {
 
         try {
             const categoryFindResult = await this.categoryRepository.findCategory(
-                transaction.category,
+                { category: transaction.category }
             );
 
             if (!categoryFindResult) {

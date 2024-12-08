@@ -1,4 +1,6 @@
-import { IReportPresenter, IUseCase, RepositoryError } from "../../common";
+import { RepositoryError } from "../../common";
+import{  IUseCase } from "../../common/types";
+import { IReportPresenter } from "../../common/interfaces/report-presenter.interface";
 import { Transaction } from "../entities/transaction.entity";
 import { ITransactionPresenter } from "../interfaces/transaction-presenter.interface";
 import { ITransactionRepository } from "../interfaces/transaction-repository.interface";

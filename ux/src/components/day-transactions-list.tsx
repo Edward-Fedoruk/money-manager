@@ -1,25 +1,17 @@
 import { FC } from "react";
 import { SummaryListItem } from "./summary-list-item";
 import { TransactionListItem } from "./transaction-list-item";
-
-export type TransactionItem = {
-    id: number;
-    date: Date;
-    category: string;
-    subCategory: string;
-    money: number;
-    moneySign: string;
-    note: string;
-};
+import { Transaction } from "../types/transaction";
 
 type Props = {
     date: string;
-    transactions: TransactionItem[];
+    transactions: Transaction[];
     className: string;
 };
 
 export const DayTransactionsList: FC<Props> = ({ date, transactions, className }) => {
-    const moneySign = transactions.find(({ moneySign }) => moneySign)?.moneySign ?? "$";
+    const currencySymbol =
+        transactions.find(({ currencySymbol }) => currencySymbol)?.currencySymbol ?? "$";
 
     const moneySpentPerDay = transactions
         .map(({ money }) => money)
@@ -28,17 +20,17 @@ export const DayTransactionsList: FC<Props> = ({ date, transactions, className }
     return (
         <ul className={`my-2 border-y border-neutral-700 ${className}`}>
             <SummaryListItem
-                moneySpent={`${moneySign} ${moneySpentPerDay}`}
+                moneySpent={`${currencySymbol} ${moneySpentPerDay}`}
                 date={new Date(date)}
             />
-            {transactions.map(({ note, moneySign, subCategory, category, money }) => (
+            {transactions.map(({ note, currencySymbol, subCategory, category, money }) => (
                 <TransactionListItem
                     key={note + money + category}
                     isSelected={false}
                     note={note}
-                    subCategory={subCategory}
-                    category={category}
-                    money={`${moneySign} ${money}`}
+                    subCategory={subCategory.name}
+                    category={category.name}
+                    money={`${currencySymbol} ${money}`}
                 />
             ))}
         </ul>

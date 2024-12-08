@@ -1,9 +1,15 @@
 export type Transaction = {
     id: number;
     date: Date;
-    category: string;
-    subCategory: string;
+    category: {
+        id: number;
+        name: string;
+    };
+    subCategory: {
+        id: number;
+        name: string;
+    };
     money: number;
-    moneySign: string;
+    currencySymbol: string;
     note: string;
 };
