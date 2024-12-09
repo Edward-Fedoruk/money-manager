@@ -44,54 +44,60 @@ export const CreateTransactionForm = () => {
     return (
         <form
             ref={formRef}
-            className="mt-5 bg-neutral-900 px-2 py-2 rounded-md"
+            className="flex-1 flex flex-col gap-2"
             onSubmit={handleSubmit(onSubmit)}
         >
-            <div className="h-7 flex items-center mt-2">
-                <label className="text-neutral-500 w-4/12" htmlFor="amount">
-                    Amount
-                </label>
-                <input
-                    {...register("number", { required: true })}
-                    type="number"
-                    className="text-neutral-200 w-full h-full focus:outline-none bg-transparent border-b border-b-neutral-700 active:border-b-red-500 active:border-b focus:border-b-red-500 focus:border-b"
-                />
-            </div>
+            <div className="bg-neutral-900 px-2 pb-4 py-2 flex-1 rounded-b-md">
+                <div className="h-7 flex items-center mt-0">
+                    <label className="text-neutral-400 w-4/12 max-w-24" htmlFor="amount">
+                        Amount
+                    </label>
+                    <input
+                        {...register("number", { required: true })}
+                        type="number"
+                        className="text-neutral-200 w-full h-full focus:outline-none bg-transparent border-b border-b-neutral-700 active:border-b-red-500 active:border-b focus:border-b-red-500 focus:border-b"
+                    />
+                </div>
 
-            <div className="h-7 flex items-center mt-2">
-                <label className="text-neutral-500 w-4/12" htmlFor="category">
-                    Category
-                </label>
-                <select
-                    className="text-neutral-200 focus:outline-none w-full h-full bg-transparent border-b border-b-neutral-700 active:border-b-red-500 active:border-b focus:border-b-red-500 focus:border-b"
-                    {...categoryFormRegister}
-                    onChange={handleCategoryChange}
-                >
-                    <option value="test1">test1</option>
-                    <option value="test2">test2</option>
-                </select>
+                <div className="h-7 flex items-center mt-5">
+                    <label className="text-neutral-400 w-4/12 max-w-24" htmlFor="category">
+                        Category
+                    </label>
+                    <select
+                        className="text-neutral-200 focus:outline-none w-full h-full bg-transparent border-b border-b-neutral-700 active:border-b-red-500 active:border-b focus:border-b-red-500 focus:border-b"
+                        {...categoryFormRegister}
+                        onChange={handleCategoryChange}
+                    >
+                        <option value="test1">test1</option>
+                        <option value="test2">test2</option>
+                    </select>
+                </div>
+                <div className="h-7 flex items-center mt-5">
+                    <label className="w-4/12 text-neutral-400 max-w-24" htmlFor="note">
+                        Note
+                    </label>
+                    <input
+                        className="text-neutral-200 focus:outline-none w-full h-full bg-transparent border-b border-b-neutral-700 active:border-b-red-500 active:border-b focus:border-b-red-500 focus:border-b"
+                        {...register("note")}
+                        type="text"
+                    />
+                </div>
             </div>
-            <div className="h-7 flex items-center mt-2">
-                <label className="w-4/12 text-neutral-500" htmlFor="note">
-                    Note
-                </label>
-                <input
-                    className="text-neutral-200 focus:outline-none w-full h-full bg-transparent border-b border-b-neutral-700 active:border-b-red-500 active:border-b focus:border-b-red-500 focus:border-b"
-                    {...register("note")}
-                    type="text"
-                />
-            </div>
-
-            <div className="flex items-center justify-around mt-5">
-                <button className="rounded-lg bg-red-500 text-neutral-300 px-8 py-2" type="submit">
-                    Save
-                </button>
-                <button
-                    className="rounded-lg bg-neutral-300 px-8 py-2 text-neutral-950"
-                    type="submit"
-                >
-                    Continue
-                </button>
+            <div className="bg-neutral-900 px-2 py-2 pt-3 pb-20 flex-1 rounded-t-md">
+                <div className="flex gap-2 items-center justify-around">
+                    <button
+                        className="flex-1 rounded-lg bg-red-500 text-neutral-300 px-8 py-2"
+                        type="submit"
+                    >
+                        Save
+                    </button>
+                    <button
+                        className="rounded-lg border border-neutral-500 text-neutral-200 px-2 py-2"
+                        type="submit"
+                    >
+                        Continue
+                    </button>
+                </div>
             </div>
         </form>
     );
